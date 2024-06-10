@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Second Web Page</title>
+    <link rel="stylesheet" href="demo.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#btn").click(function (event) {
+          // Check if the table already exists
+          if ($("#data-table").length) {
+            return;
+          }
+
+          // Fetch the JSON data
+          $.getJSON("data.json", function (data) {
+            // Create the table structure
+            var tableHTML = `
+                        <table id="data-table">
+                            <caption>${data.title}</caption>
+                            <thead>
+                                <tr id="showheading"></tr>
+                            </thead>
+                            <tbody>
+                                <tr id="showcalories"></tr>
+                                <tr id="showfat"></tr>
+                            </tbody>
+                            <tfoot>
+                                <tr id="showven"></tr>
+                            </tfoot>
+                        </table>
+                    `;
+
+            // Append the table to the main section
+            $("main").append(tableHTML);
+
+            // Add table headers
+            var heading = data.heading;
+            var head1 = data.head1;
+            var head2 = data.head2;
+            var head3 = data.head3;
+            var head4 = data.head4;
+            $("#showheading").append(
+              `<th>${heading}</th><th>${head1}</th><th>${head2}</th><th>${head3}</th><th>${head4}</th>`
+            );
+
+            // Add calories row
+            var subheadcal = data.subheadcal;
+            var cal1 = data.cal1;
+            var cal2 = data.cal2;
+            var cal3 = data.cal3;
+            var cal4 = data.cal4;
+            $("#showcalories").append(
+              `<td>${subheadcal}</td><td>${cal1}</td><td>${cal2}</td><td>${cal3}</td><td>${cal4}</td>`
+            );
+
+            // Add fat row
+            var subheadfat = data.subheadfat;
+            var fat1 = data.fat1;
+            var fat2 = data.fat2;
+            var fat3 = data.fat3;
+            var fat4 = data.fat4;
+            $("#showfat").append(
+              `<td>${subheadfat}</td><td>${fat1}</td><td>${fat2}</td><td>${fat3}</td><td>${fat4}</td>`
+            );
+
+            // Add vendor row in tfoot
+            var subheadven = data.subheadven;
+            var ven1 = data.ven1;
+            var ven2 = data.ven2;
+            var ven3 = data.ven3;
+            var ven4 = data.ven4;
+            $("#showven").append(
+              `<td>${subheadven}</td><td>${ven1}</td><td>${ven2}</td><td>${ven3}</td><td>${ven4}</td>`
+            );
+          }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.error("Error loading JSON file: ", textStatus, errorThrown);
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <header>My Web Site Brand</header>
+      <nav>
+        <ul>
+          <li><a href="js-demo2.html">Home</a></li>
+          <li><a href="js-demo2b.html">About</a></li>
+          <li><a href="js-demo2d.html">Gallery</a></li>
+          <li><a href="js-demo2c.html">Contact</a></li>
+        </ul>
+      </nav>
+      <main>
+        <h1>My Second Heading</h1>
+        <p>My Second paragraph.</p>
+        <input
+          type="button"
+          id="btn"
+          value="Load Data"
+          style="margin-top: 20px"
+        />
+      </main>
+      <footer>&copy; Copyright 2020</footer>
+    </div>
+  </body>
+</html>
